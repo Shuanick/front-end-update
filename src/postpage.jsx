@@ -23,7 +23,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
         const imageFormData = new FormData();
         imageFormData.append("image", imageFile); // Append the image file
         const imageResponse = await axios.post(
-          "https://nickproduct-d61b16cc0f17.herokuapp.com/upload",//
+          "https://nickproduct-d61b16cc0f17.herokuapp.com/posts",//
           imageFormData,
           {
             headers: {
