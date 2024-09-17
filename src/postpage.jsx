@@ -23,7 +23,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
         const imageFormData = new FormData();
         imageFormData.append("image", imageFile); // Append the image file
         const imageResponse = await axios.post(
-          "https://nickproduct-d61b16cc0f17.herokuapp.com/posts",//
+          "https://nickproduct2.netlify.app/upload",//
           imageFormData,
           {
             headers: {
@@ -44,7 +44,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
       }
 
       const response = await axios.post(
-        "https://nickproduct-d61b16cc0f17.herokuapp.com/posts",//
+        "https://nickproduct2.netlify.app/posts",//
         postFormData,
         {
           headers: {
