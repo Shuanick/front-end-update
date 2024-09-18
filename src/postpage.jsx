@@ -1,9 +1,11 @@
 import { React, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
+function Postpage({ imagePreview, handleModalClose, imageFile, resetImage,addNewPost }) {
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false); //
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -56,10 +58,11 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
       // 清除內容和關閉模態框
       setContent("");
       handleModalClose();
+      navigate("/");
     } catch (error) {
       console.error("Error creating post:", error);
     } finally {
-      setLoading(false);//
+      setLoading(false);
     }
   };
 
@@ -67,7 +70,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
     <div className="notlist2" onClick={handleClick}>
       <div className="post-container">
         <div className="post-header">建立新貼文</div>
-        <div className="post">
+        <div className="prepost">
           <div className="picture">
             <img src={imagePreview} alt="Preview" />
           </div>

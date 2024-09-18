@@ -1,6 +1,25 @@
-import React from "react";
+import {React,useState,useEffect} from "react";
+import axios from "axios";
+import Post from "./post.jsx";
 
 function Home() {
+  const [posts, setPosts] = useState([]);
+
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("https://nickproduct-d61b16cc0f17.herokuapp.com/posts");
+        console.log(response.data)
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <div className="notlist">
       <div className="main">
@@ -14,6 +33,11 @@ function Home() {
             <div className="story"></div>
             <div className="story"></div>
             <div className="story"></div>
+          </div>
+          <div className="post-body">
+            {posts.slice().reverse().map((post)=>(
+              <Post key={post._id} post={post}/>
+            ))}
           </div>
         </div>
         <div className="user"></div>

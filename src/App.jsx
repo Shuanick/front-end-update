@@ -222,7 +222,7 @@ function App() {
         </div>
       </div>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/message" element={<Message />} />
         <Route path="/notification" element={<Bell />} />
         <Route path="/post" element={<Postpage imagePreview={imagePreview} handleModalClose={handleModalClose} isImageUploaded={isImageUploaded} imageFile={imageFile} resetImage={resetImage}/>} />
