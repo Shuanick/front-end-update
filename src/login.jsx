@@ -8,12 +8,12 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/"); // 如果已登录，重定向到首页
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     navigate("/"); // 如果已登录，重定向到首页
+  //   }
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

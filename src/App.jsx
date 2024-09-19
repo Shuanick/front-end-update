@@ -55,7 +55,7 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-  }, [navigate]);
+  }, []);
 
   const handleIconClick = (iconName, event) => {
     event.stopPropagation();
@@ -166,13 +166,6 @@ function App() {
   }, [isModalOpen, isSearchOpen, isImageUploaded]);
 
   return (
-    <>
-      {!isLoggedIn ? (
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      ) : (
         <div className="container1">
           <div className="list">
             <div
@@ -273,7 +266,7 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
             <Route path="/message" element={<Message />} />
             <Route path="/notification" element={<Bell />} />
             <Route
@@ -290,6 +283,7 @@ function App() {
               }
             />
             <Route path={`/users/${userId}`} element={<Profile />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
           {isModalOpen && (
             <div className="modal1" ref={modal1Ref}>
@@ -431,8 +425,6 @@ function App() {
             </div>
           </div>
         </div>
-      )}
-    </>
   );
 }
 
