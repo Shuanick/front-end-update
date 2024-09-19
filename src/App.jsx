@@ -45,6 +45,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("userId");
+    console.log(id);
     // localStorage.removeItem("token");
     // localStorage.removeItem("userId");
     if (token) {
@@ -170,7 +171,6 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       ) : (
         <div className="container1">

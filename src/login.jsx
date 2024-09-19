@@ -13,7 +13,7 @@ function Login() {
     if (token) {
       navigate("/"); // 如果已登录，重定向到首页
     }
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
