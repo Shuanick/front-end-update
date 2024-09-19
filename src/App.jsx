@@ -43,20 +43,18 @@ function App() {
   const uploadRef = useRef();
 
   useEffect(() => {
-    const id = localStorage.getItem("userId");
-    console.log(id);
-    if (id) {
-      setUserId(id);
-    }
     const token = localStorage.getItem("token");
+    const id = localStorage.getItem("userId");
     // localStorage.removeItem("token");
     // localStorage.removeItem("userId");
     if (token) {
       setIsLoggedIn(true);
+      setUserId(id);
+      navigate("/");
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [navigate]);
 
   const handleIconClick = (iconName, event) => {
     event.stopPropagation();

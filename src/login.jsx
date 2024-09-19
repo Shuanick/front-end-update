@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/"); // 如果已登录，重定向到首页
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +24,7 @@ function Login() {
       });
       localStorage.setItem("token", response.data.token); // 存储token
       localStorage.setItem("userId", username);
-      window.location.reload();
+      navigate("/");
     } catch (error) {
       console.error(
         "Login error:",
