@@ -53,7 +53,6 @@ function App() {
     // localStorage.removeItem("userId");
     if (token) {
       setIsLoggedIn(true);
-      navigate("/");
     } else {
       setIsLoggedIn(false);
     }
