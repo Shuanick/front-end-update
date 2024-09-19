@@ -118,7 +118,6 @@ html, body {
 }
 .iconLast{
   width: 220px;
-  flex:1;
   display: flex;
   align-items: center;
   margin-top: 100px;
