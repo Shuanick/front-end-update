@@ -8,7 +8,7 @@ function Post({ post }) {
   }
   return (
     <div className="post" key={post._id}>
-      <div className="post-id">{post._id}</div>
+      <div className="post-id">{post.user}</div>
       <div className="post-image-body">
         <img src={post.image} className="post-image" />
       </div>

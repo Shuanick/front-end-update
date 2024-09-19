@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Postpage({ imagePreview, handleModalClose, imageFile, resetImage,addNewPost }) {
+function Postpage({ imagePreview, handleModalClose, imageFile, resetImage, userId }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -44,6 +44,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage,addNew
       if (imagePath) {
         postFormData.append("image", imagePath); // Append the image URL
       }
+      postFormData.append("user", userId);
 
       const response = await axios.post(
         "https://nickproduct-d61b16cc0f17.herokuapp.com/posts",//
