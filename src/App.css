@@ -118,9 +118,10 @@ html, body {
 }
 .iconLast{
   width: 220px;
+  flex:1;
   display: flex;
   align-items: center;
-  margin-top: 250px;
+  margin-top: 100px;
   cursor: pointer;
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.3s ease;
