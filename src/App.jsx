@@ -266,10 +266,9 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/" element={isLoggedIn ? <Home /> : <Login/>} />
             <Route path="/message" element={<Message />} />
             <Route path="/notification" element={<Bell />} />
-            <Route path="/login" element={<Login />} />
             <Route
               path="/post"
               element={
