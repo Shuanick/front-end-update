@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import {
   IoSearch,
   IoSettingsOutline,
@@ -293,6 +293,7 @@ function App() {
             />
             <Route path={`/users/${userId}`} element={<Profile userId={userId}/>} />
             <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
           {isModalOpen && (
             <div className="modal1" ref={modal1Ref}>
