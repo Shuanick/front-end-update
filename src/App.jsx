@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Routes, Route, useNavigate } from "react-router-dom";
 import {
   IoSearch,
   IoSettingsOutline,
