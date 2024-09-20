@@ -6,9 +6,14 @@ function Post({ post }) {
   let toggleLike = ()=>{
     setIsLike(!isLike);
   }
+  const utcDate = new Date(post.createdAt);
+  const taiwanTime = utcDate.toLocaleDateString("zh-TW", { timeZone: "Asia/Taipei",month: '2-digit', day: '2-digit' });
   return (
     <div className="post" key={post._id}>
-      <div className="post-id">{post.user}</div>
+      <div className="post-head">
+        <div className="post-id">{post.user}</div>
+        <div className="post-time">{`• ${taiwanTime}`}</div>
+      </div>
       <div className="post-image-body">
         <img src={post.image} className="post-image" />
       </div>

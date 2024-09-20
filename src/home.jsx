@@ -9,6 +9,7 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        //https://nickproduct-d61b16cc0f17.herokuapp.com
         const response = await axios.get("https://nickproduct-d61b16cc0f17.herokuapp.com/posts");
         console.log(response.data)
         setPosts(response.data);
@@ -24,16 +25,6 @@ function Home() {
     <div className="notlist">
       <div className="main">
         <div className="content">
-          <div className="story-list">
-            <div className="story"></div>
-            <div className="story"></div>
-            <div className="story"></div>
-            <div className="story"></div>
-            <div className="story"></div>
-            <div className="story"></div>
-            <div className="story"></div>
-            <div className="story"></div>
-          </div>
           <div className="post-body">
             {posts.slice().reverse().map((post)=>(
               <Post key={post._id} post={post}/>
