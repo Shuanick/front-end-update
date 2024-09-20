@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import {
   IoSearch,
   IoSettingsOutline,
@@ -45,29 +45,23 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("userId");
-    const localIcon = localStorage.getItem("icon")
     console.log(id);
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("userId");
     if (token) {
       setIsLoggedIn(true);
       setUserId(id);
-      // setSelectedIcon(localIcon);
+      navigate("/");
     } else {
       setIsLoggedIn(false);
     }
   }, []);
-
-  const handleLogOut = ()=> {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    window.location.reload();
-  }
 
   const handleIconClick = (iconName, event) => {
     event.stopPropagation();
     console.log(iconName);
     setSelectedIcon(iconName);
     if (iconName === "home") {
-      localStorage.setItem("icon",iconName);
       navigate("/");
       window.location.reload();
     } else if (iconName === "more") {
@@ -77,10 +71,8 @@ function App() {
       setIsModalOpen(false);
       setShowNicky(false);
     } else if (iconName === "message") {
-      localStorage.setItem("icon",iconName);
       navigate("/message");
     } else if (iconName === "bell") {
-      localStorage.setItem("icon",iconName);
       navigate("/notification");
     } else if (iconName === "add") {
       const modal = new window.bootstrap.Modal(
@@ -88,7 +80,6 @@ function App() {
       );
       modal.show();
     } else if (iconName === "profile") {
-      localStorage.setItem("icon",iconName);
       navigate(`/users/${userId}`);
     } else {
       setShowNicky(true);
@@ -291,7 +282,7 @@ function App() {
                 />
               }
             />
-            <Route path={`/users/${userId}`} element={<Profile userId={userId}/>} />
+            <Route path={`/users/${userId}`} element={<Profile />} />
             <Route path="/register" element={<Register />} />
           </Routes>
           {isModalOpen && (
@@ -324,7 +315,7 @@ function App() {
               <div className="modal-content1" style={{ marginTop: "5px" }}>
                 <div className="icon-text">切換帳號</div>
               </div>
-              <div  className="modal-content1" data-bs-toggle="modal" data-bs-target="#logoutModal" style={{ marginBottom: "5px" }}>
+              <div className="modal-content1" style={{ marginBottom: "5px" }}>
                 <div className="icon-text">登出</div>
               </div>
             </div>
@@ -429,19 +420,6 @@ function App() {
                   >
                     確認
                   </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="modal fade" id="logoutModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered  logout-modal">
-              <div className="modal-content">
-                <div className="modal-header logout-header">
-                  <span className="modal-title" style={{fontSize:'20px'}} id="exampleModalLabel">確定登出 ?</span>
-                </div>
-                <div className="modal-footer logout-footer">
-                  <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-                  <button type="button" className="btn btn-outline-danger" onClick={handleLogOut}>登出</button>
                 </div>
               </div>
             </div>
