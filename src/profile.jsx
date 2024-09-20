@@ -15,7 +15,7 @@ function Profile({userId}){
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}`);
-        if (response.data) {
+        if (response.data.introduction) {
           setIntroduction(response.data.introduction); // 设置简介
         } else{
           setIntroduction("此人未留下任何內容");
