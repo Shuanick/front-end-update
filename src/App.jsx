@@ -59,6 +59,7 @@ function App() {
   const handleLogOut = ()=> {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    localStorage.removeItem("icon");
     window.location.reload();
   }
 

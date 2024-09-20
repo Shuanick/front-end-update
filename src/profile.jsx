@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function Profile({userId}){
   const [isEditing, setIsEditing] = useState(false);
-  const [introduction, setIntroduction] = useState("此人尚未留下想說的話");
+  const [introduction, setIntroduction] = useState("");
   const [originalIntroduction, setOriginalIntroduction] = useState(introduction);
 
   const handleEdit = () => {
@@ -18,6 +17,8 @@ function Profile({userId}){
         const response = await axios.get(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}`);
         if (response.data) {
           setIntroduction(response.data.introduction); // 设置简介
+        } else{
+          setIntroduction("此人未留下任何內容");
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -25,7 +26,7 @@ function Profile({userId}){
     };
 
     fetchUserData();
-  }, []);
+  }, [userId]);
 
   const updateIntroduction = async () => {
     try {
@@ -38,7 +39,7 @@ function Profile({userId}){
       console.error('Error updating user:', error);
     }
   };
-  
+
   return (
     <div className='notlist'>
       <div className='main'>
