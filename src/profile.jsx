@@ -12,20 +12,20 @@ function Profile({userId}){
     setIsEditing(true);
   };
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await axios.get(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}`);
-  //       if (response.data) {
-  //         setIntroduction(response.data.introduction); // 设置简介
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}`);
+        if (response.data) {
+          setIntroduction(response.data.introduction); // 设置简介
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
-  //   fetchUserData();
-  // }, []);
+    fetchUserData();
+  }, []);
 
   const updateIntroduction = async () => {
     try {
@@ -41,7 +41,7 @@ function Profile({userId}){
   
   return (
     <div className='notlist'>
-      {/* <div className='main'>
+      <div className='main'>
         <div className='profile-body'>
           <div className='profile-header'>
           <div className='profile-user'>{userId}</div>
@@ -73,7 +73,7 @@ function Profile({userId}){
           )}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

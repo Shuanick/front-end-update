@@ -22,7 +22,7 @@ function Register() {
 
   return (
     <div className="login-page">
-      {/* <form className="login-body" onSubmit={handleSubmit}>
+      <form className="login-body" onSubmit={handleSubmit}>
         <div className="login-head">註冊您的帳號</div>
         <div>
           <input
@@ -41,7 +41,7 @@ function Register() {
           />
         </div>
         <button type="submit">注册</button>
-      </form> */}
+      </form>
     </div>
   );
 }

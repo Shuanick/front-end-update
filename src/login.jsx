@@ -1,12 +1,10 @@
 import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +29,7 @@ function Login() {
 
   return (
     <div className="login-page">
-      {/* <form className="login-body" onSubmit={handleSubmit}>
+      <form className="login-body" onSubmit={handleSubmit}>
         <div className="login-head">請登入您的帳號</div>
         <div>
         <input
@@ -53,7 +51,7 @@ function Login() {
         <p>
         没有會員？ <Link to="/register">加入</Link>
       </p>
-      </form> */}
+      </form>
     </div>
   );
 }

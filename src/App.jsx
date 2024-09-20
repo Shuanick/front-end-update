@@ -50,7 +50,7 @@ function App() {
     if (token) {
       setIsLoggedIn(true);
       setUserId(id);
-      // setSelectedIcon(localIcon);
+      setSelectedIcon(localIcon);
     } else {
       setIsLoggedIn(false);
     }
