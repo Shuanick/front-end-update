@@ -17,7 +17,6 @@ function Login() {
       });
       localStorage.setItem("token", response.data.token); // 存储token
       localStorage.setItem("userId", username);
-      navigate("/");
       window.location.reload();
     } catch (error) {
       console.error(
