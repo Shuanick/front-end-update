@@ -56,7 +56,7 @@ function Home({userId}) {
               .slice()
               .reverse()
               .map((post) => (
-                <Post key={post._id} post={post} />
+                <Post key={post._id} post={post} userId={userId}/>
               ))}
           </div>
         </div>
@@ -64,7 +64,7 @@ function Home({userId}) {
           <div className="recommend-title">為您推薦</div>
           <div className="recommend-users">
             {recommendedUsers.map((user) => (
-                <Link className="link-user" to={`/users/${user.username}`}>{user.username}</Link>
+                <Link key={user.username} className="link-user" to={`/users/${user.username}`}>{user.username}</Link>
             ))}
           </div>
         </div>

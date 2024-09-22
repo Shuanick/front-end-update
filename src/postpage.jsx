@@ -25,7 +25,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage, userI
         const imageFormData = new FormData();
         imageFormData.append("image", imageFile); // Append the image file
         const imageResponse = await axios.post(
-          "https://nickproduct-d61b16cc0f17.herokuapp.com/upload",//
+          "http://localhost:3000/upload",//
           imageFormData,
           {
             headers: {
@@ -45,6 +45,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage, userI
         postFormData.append("image", imagePath); // Append the image URL
       }
       postFormData.append("user", userId);
+      postFormData.append("likedBy", JSON.stringify([])); // 初始化的按讚用戶陣列
 
       const response = await axios.post(
         "https://nickproduct-d61b16cc0f17.herokuapp.com/posts",//
