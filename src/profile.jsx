@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-function Profile({userId}){
+function Profile(){
+  const { userId } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [introduction, setIntroduction] = useState("");
   const [originalIntroduction, setOriginalIntroduction] = useState(introduction);
@@ -61,8 +63,8 @@ function Profile({userId}){
                 value={introduction}
                 onChange={(e) => setIntroduction(e.target.value)}
               />           
-              <button class="btn btn-outline-secondary" style={{marginRight:'10px'}} type="submit">更新</button>
-              <button class="btn btn-outline-secondary" onClick={() => {
+              <button className="btn btn-outline-secondary" style={{marginRight:'10px'}} type="submit">更新</button>
+              <button className="btn btn-outline-secondary" onClick={() => {
                 setIntroduction(originalIntroduction);
                 setIsEditing(false);
               }}>取消</button>

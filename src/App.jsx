@@ -276,7 +276,7 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={isLoggedIn ? <Home /> : <Login/>} />
+            <Route path="/" element={isLoggedIn ? <Home userId={userId}/> : <Login/>} />
             <Route path="/message" element={<Message />} />
             <Route path="/notification" element={<Bell />} />
             <Route
@@ -292,7 +292,7 @@ function App() {
                 />
               }
             />
-            <Route path={`/users/${userId}`} element={<Profile userId={userId}/>} />
+            <Route path={`/users/:userId`} element={<Profile/>} />
             <Route path="/register" element={<Register />} />
           </Routes>
           {isModalOpen && (
