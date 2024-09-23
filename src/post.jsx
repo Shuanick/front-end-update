@@ -42,7 +42,7 @@ function Post({ post,userId }) {
       </div>
       <div className="post-icons">
         {<RiHeartFill className={`post-icon ${isLiked?"like":"unlike"}`} onClick={toggleLike}/>}
-        <div className="likes-number">{likedBy.length===0?"此貼文尚未被按讚":likedBy.length+"個人按讚"}</div>
+        <div className="likes-number">{likedBy.length===1?"此貼文尚未被按讚":likedBy.length-1+"個人按讚"}</div>
       </div>
       <div className="post-text">{post.content}</div>
     </div>
