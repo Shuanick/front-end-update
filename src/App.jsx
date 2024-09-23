@@ -60,6 +60,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("icon");
+    navigate('/');
     window.location.reload();
   }
 
@@ -276,7 +277,7 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={isLoggedIn ? <Home userId={userId}/> : <Login/>} />
+            <Route path="/" element={isLoggedIn ? <Home/> : <Login/>} />
             <Route path="/message" element={<Message />} />
             <Route path="/notification" element={<Bell />} />
             <Route
@@ -288,7 +289,6 @@ function App() {
                   isImageUploaded={isImageUploaded}
                   imageFile={imageFile}
                   resetImage={resetImage}
-                  userId={userId}
                 />
               }
             />

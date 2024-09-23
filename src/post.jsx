@@ -1,7 +1,7 @@
 import { React, useState,useEffect } from "react";
 import { RiHeartFill } from "react-icons/ri";
 import axios from "axios";
-
+import { Link } from 'react-router-dom';
 
 function Post({ post,userId }) {
   const [likedBy, setLikedBy] = useState([]);
@@ -34,7 +34,7 @@ function Post({ post,userId }) {
   return (
     <div className="post" key={post._id}>
       <div className="post-head">
-        <div className="post-id">{post.user}</div>
+        <Link className="post-id" to={`/users/${post.user}`}>{post.user}</Link>
         <div className="post-time">{`• ${taiwanTime}`}</div>
       </div>
       <div className="post-image-body">

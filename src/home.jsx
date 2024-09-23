@@ -3,10 +3,10 @@ import axios from "axios";
 import Post from "./post.jsx";
 import { Link } from 'react-router-dom';
 
-function Home({userId}) {
+function Home() {
   const [posts, setPosts] = useState([]);
   const [recommendedUsers, setRecommendedUsers] = useState([]);
-
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
 
   useEffect(() => {
     const fetchPosts = async () => {

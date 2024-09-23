@@ -2,9 +2,10 @@ import { React, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Postpage({ imagePreview, handleModalClose, imageFile, resetImage, userId }) {
+function Postpage({ imagePreview, handleModalClose, imageFile, resetImage }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -25,7 +26,7 @@ function Postpage({ imagePreview, handleModalClose, imageFile, resetImage, userI
         const imageFormData = new FormData();
         imageFormData.append("image", imageFile); // Append the image file
         const imageResponse = await axios.post(
-          "http://localhost:3000/upload",//
+          "https://nickproduct-d61b16cc0f17.herokuapp.com/upload",//
           imageFormData,
           {
             headers: {
