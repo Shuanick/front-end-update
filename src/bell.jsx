@@ -18,7 +18,7 @@ function Bell() {
     };
     fetchNotifications();
 
-    const socket = new WebSocket(`wss://localhost:3000/${userId}`);//
+    const socket = new WebSocket(`wss://nickproduct-d61b16cc0f17.herokuapp.com/${userId}`);//
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);

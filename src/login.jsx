@@ -36,14 +36,14 @@ function Login() {
           type="text"
           placeholder="帳號"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value.trim())}
           required
         />
         <input
           type="password"
           placeholder="密碼"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value.trim())}
           required
         />
         </div>

@@ -13,10 +13,10 @@ function Register() {
         "https://nickproduct-d61b16cc0f17.herokuapp.com/users/register",
         { username, password }
       );
-      alert("注册成功");
+      alert("註冊成功");
       navigate("/");
     } catch (error) {
-      alert("注册失败:" + error.message);
+      alert("註冊失敗:" + error.message);
     }
   };
 
@@ -27,16 +27,16 @@ function Register() {
         <div>
           <input
             type="text"
-            placeholder="用户名"
+            placeholder="帳號"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.trim())}
             required
           />
           <input
             type="password"
-            placeholder="密码"
+            placeholder="密碼"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
             required
           />
         </div>
