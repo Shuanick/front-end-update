@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate} from "react-router-dom";
 import {
   IoSearch,
   IoSettingsOutline,
-  IoCloseCircleOutline,
 } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { TbMessageCircle } from "react-icons/tb";
@@ -23,13 +22,12 @@ import Postpage from "./postpage.jsx";
 import Register from "./register.jsx";
 import Login from "./login.jsx";
 import Profile from "./profile.jsx";
+import Search from "./search.jsx";
 
 function App() {
   const [selectedIcon, setSelectedIcon] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
   const [showNicky, setShowNicky] = useState(true);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
@@ -41,7 +39,7 @@ function App() {
   const modal1Ref = useRef();
   const searchModalRef = useRef();
   const uploadRef = useRef();
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("userId");
@@ -135,10 +133,6 @@ function App() {
 
   const resetImage = () => {
     setImageFile("");
-  };
-
-  const handleClear = () => {
-    setSearchText("");
   };
 
   const handleFileUpload = (event) => {
@@ -335,48 +329,7 @@ function App() {
             onClick={handleModalClose}
             ref={searchModalRef}
           >
-            <div className="search-header">
-              <h3 style={{ margin: "25px", fontWeight: "bold" }}>搜尋</h3>
-            </div>
-            <div
-              className="input-wrapper"
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-            >
-              <input
-                type="text"
-                className={`searching ${
-                  !isFocused && searchText ? "placeholder-color" : ""
-                }`}
-                placeholder="搜尋"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              {searchText && (
-                <IoCloseCircleOutline
-                  className="clear-icon"
-                  onClick={handleClear}
-                />
-              )}
-            </div>
-            <div
-              style={{
-                backgroundColor: "rgba(0,0,0,0.1)",
-                height: "1px",
-                width: "100%",
-                marginTop: "40px",
-              }}
-            ></div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                width: "100%",
-                marginTop: "20px",
-              }}
-            >
-              <h5 style={{ marginLeft: "30px", fontWeight: "bold" }}>最近</h5>
-            </div>
+            <Search setIsSearchOpen={setIsSearchOpen}/>
           </div>
           <div
             className="modal fade"

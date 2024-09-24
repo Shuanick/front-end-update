@@ -55,12 +55,20 @@ function Profile(){
         await axios.delete(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}/friend-request`, {
           data: { requesterUsername: currentId }
         });
+
         setIsRequest(false);
       } else {
-        //发送好友请求
+        //發送好友请求
         await axios.post(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}/friend-request`, {
           requesterUsername: currentId
         });
+        //發送通知
+        await axios.post(`https://nickproduct-d61b16cc0f17.herokuapp.com/notifications`, {
+          user: userId, // 接收通知的用户
+          type: "friendRequest", // 通知类型
+          from: currentId // 发送请求的用户
+        });
+
         setIsRequest(true);
       }
     } catch (error) {

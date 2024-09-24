@@ -251,6 +251,20 @@ html, body {
   align-items: center;
   outline: none;
 }
+.searching-body{
+  width: 100%;
+  flex:1;
+}
+.searching-users{
+  width: 100%;
+  padding-left: 25px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.searching-users:hover{
+  color: rgba(0, 0, 0, 0.6);
+}
 .placeholder-color {
   color: #888;
 }
