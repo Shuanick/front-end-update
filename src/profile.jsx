@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function Profile(){
   const { userId } = useParams();
@@ -9,6 +9,8 @@ function Profile(){
   const [originalIntroduction, setOriginalIntroduction] = useState(introduction);
   const [isRequest, setIsRequest] = useState(false);
   const [currentId, setCurrentId] = useState(localStorage.getItem("userId"));
+
+  const navigate = useNavigate();
 
   const handleEdit = () => {
     setOriginalIntroduction(introduction);
@@ -48,16 +50,21 @@ function Profile(){
     }
   };
 
+  const talk = ()=> {
+    navigate('/message', { state: { talkId: userId } });
+  }
+
   const handleClick = async () => {
     try {
       if (isRequest) {
         // 撤销好友请求
+        setIsRequest(false);
         await axios.delete(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}/friend-request`, {
           data: { requesterUsername: currentId }
         });
 
-        setIsRequest(false);
       } else {
+        setIsRequest(true);
         //發送好友请求
         await axios.post(`https://nickproduct-d61b16cc0f17.herokuapp.com/users/${userId}/friend-request`, {
           requesterUsername: currentId
@@ -68,11 +75,10 @@ function Profile(){
           type: "friendRequest", // 通知类型
           from: currentId // 发送请求的用户
         });
-
-        setIsRequest(true);
       }
     } catch (error) {
       console.error("Error toggling friend request:", error);
+      setIsRequest(prev => !prev);
     }
   };
 
@@ -85,7 +91,11 @@ function Profile(){
               <div className='profile-user'>{userId}</div>
               {currentId===userId?"":<button onClick={handleClick} className={`addfriend ${isRequest?"request":"not-request"}`}>{isRequest?"已申請":"新增好友"}</button>}
             </div>
-            <div className='fans'></div>
+            <div className='fans'>
+              <div>? 位粉絲</div>
+              <div>? 位追蹤</div>
+              {currentId===userId?"":<button type="button" className="btn btn-secondary talk-button" onClick={talk}>發送訊息</button>}
+            </div>
             <div style={{ display:'flex',justifyContent:'flex-start',alignItems:'center'}}>
               <span style={{fontWeight:'bold',margin:'0 20px 0 0'}}>個人簡介</span>
               {currentId===userId?<button style={{ fontSize: '0.8rem', padding: '0.2rem 0.4rem' }} className="btn btn-primary" onClick={handleEdit}>編輯</button>:""}
