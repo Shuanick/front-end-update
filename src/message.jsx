@@ -29,6 +29,39 @@ function Message() {
     }
   };
 
+  const fetchFriends = async () => {
+    try {
+      //獲取當前用戶的聊天紀錄
+      const response = await axios.get(
+        `https://nickproduct-d61b16cc0f17.herokuapp.com/chats/${currentId}`
+      );
+      const chats = response.data;
+
+      const participantsMap = new Map();
+
+      // 提取聊天对象，假设聊天记录中有 participants
+      chats.forEach((chat) => {
+        const lastMessage = chat.messages[chat.messages.length - 1];
+        chat.participants.forEach((participant) => {
+          if (participant !== currentId) {
+            participantsMap.set(
+              participant,
+              lastMessage ? lastMessage.timestamp : new Date(0)
+            );
+          }
+        });
+      });
+
+      // 将参与者转换为数组并排序
+      const sortedFriends = Array.from(participantsMap.entries()).sort(
+        (a, b) => new Date(b[1]) - new Date(a[1])
+      ); // 按时间戳降序排序
+      setFriends(sortedFriends.map(([friend]) => friend)); // 只保留朋友的ID
+    } catch (error) {
+      console.error("获取朋友时出错:", error);
+    }
+  };
+
   useEffect(() => {
     // 当 messages 更新时，滚动到最底部
     if (messageContainerRef.current) {
@@ -38,39 +71,6 @@ function Message() {
   }, [messages]);
 
   useEffect(() => {
-    const fetchFriends = async () => {
-      try {
-        //獲取當前用戶的聊天紀錄
-        const response = await axios.get(
-          `https://nickproduct-d61b16cc0f17.herokuapp.com/chats/${currentId}`
-        );
-        const chats = response.data;
-
-        const participantsMap = new Map();
-
-        // 提取聊天对象，假设聊天记录中有 participants
-        chats.forEach((chat) => {
-          const lastMessage = chat.messages[chat.messages.length - 1];
-          chat.participants.forEach((participant) => {
-            if (participant !== currentId) {
-              participantsMap.set(
-                participant,
-                lastMessage ? lastMessage.timestamp : new Date(0)
-              );
-            }
-          });
-        });
-
-        // 将参与者转换为数组并排序
-        const sortedFriends = Array.from(participantsMap.entries()).sort(
-          (a, b) => new Date(b[1]) - new Date(a[1])
-        ); // 按时间戳降序排序
-        setFriends(sortedFriends.map(([friend]) => friend)); // 只保留朋友的ID
-      } catch (error) {
-        console.error("获取朋友时出错:", error);
-      }
-    };
-
     fetchFriends();
 
     fetchMessage();
@@ -80,10 +80,8 @@ function Message() {
     ); //
 
     socketRef.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setMessages((prevMessages) =>
-        [...prevMessages, data.chat.messages].flat()
-      );
+      fetchFriends();
+      fetchMessage();
     };
 
     socketRef.current.onclose = () => {
@@ -167,29 +165,33 @@ function Message() {
         </div>
       </div>
       <div className="messagebox">
-        <div className="friend-user">{selectedFriend}</div>
-        <div className="message" ref={messageContainerRef}>
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={
-                msg.sender === selectedFriend ? "other-message" : "my-message"
-              }
-            >
-              {msg.content}
-            </div>
-          ))}
-        </div>
         {selectedFriend ? (
-          <form onSubmit={handleSendMessage} className="message-content-box">
-            <input
-              type="text"
-              className="message-content"
-              value={messageContent}
-              onChange={(e) => setMessageContent(e.target.value)}
-              placeholder="请输入消息..."
-            />
-          </form>
+          <>
+            <div className="friend-user">{selectedFriend}</div>
+            <div className="message" ref={messageContainerRef}>
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={
+                    msg.sender === selectedFriend
+                      ? "other-message"
+                      : "my-message"
+                  }
+                >
+                  {msg.content}
+                </div>
+              ))}
+            </div>
+            <form onSubmit={handleSendMessage} className="message-content-box">
+              <input
+                type="text"
+                className="message-content"
+                value={messageContent}
+                onChange={(e) => setMessageContent(e.target.value)}
+                placeholder="请输入消息..."
+              />
+            </form>
+          </>
         ) : null}
       </div>
     </div>
