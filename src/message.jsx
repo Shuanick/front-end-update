@@ -34,7 +34,7 @@ function Message() {
   }, [messages]);
 
   useEffect(() => {
-    setSelectedFriend(localStorage.getItem("selectedFriend"));
+    // setSelectedFriend(localStorage.getItem("selectedFriend"));
     const fetchFriends = async () => {
       try {
         //獲取當前用戶的聊天紀錄
