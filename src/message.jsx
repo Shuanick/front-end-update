@@ -19,7 +19,6 @@ function Message() {
       const response = await axios.get(`https://nickproduct-d61b16cc0f17.herokuapp.com/chats/${currentId}`);
       const chats = response.data;
       const chat = chats.find((chat) => chat.participants.includes(selectedFriend));
-      console.log(chat);
       setMessages(chat ? chat.messages : []); // 更新消息状态
     } catch (error) {
       console.error("获取聊天记录时出错:", error);
@@ -34,7 +33,6 @@ function Message() {
   }, [messages]);
 
   useEffect(() => {
-    // setSelectedFriend(localStorage.getItem("selectedFriend"));
     const fetchFriends = async () => {
       try {
         //獲取當前用戶的聊天紀錄
@@ -76,7 +74,7 @@ function Message() {
 
     socketRef.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, data.chat.messages]);
+      setMessages((prevMessages) => [...prevMessages, data.chat.messages].flat());
     };
 
     socketRef.current.onclose = () => {
@@ -87,7 +85,6 @@ function Message() {
 
   const handleFriendClick = (friend) => {
     setSelectedFriend(friend);
-    localStorage.setItem("selectedFriend",friend);
   };
 
   const handleSendMessage = async (event) => {
@@ -101,6 +98,8 @@ function Message() {
       participants: [currentId, selectedFriend],
     };
 
+    setMessages((prevMessages) => [...prevMessages, messageData]);
+
     try {
       await axios.post("https://nickproduct-d61b16cc0f17.herokuapp.com/chats", messageData);
       setMessageContent(""); // 清空输入框
@@ -112,7 +111,7 @@ function Message() {
         updatedFriends.unshift(selectedFriend); // 放到最前面
         return updatedFriends;
       });
-      fetchMessage();
+
     } catch (error) {
       console.error("发送消息时出错:", error);
     }

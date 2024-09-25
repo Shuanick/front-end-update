@@ -58,7 +58,6 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("icon");
-    localStorage.removeItem("selectedFriend");
     navigate('/');
     window.location.reload();
   }
