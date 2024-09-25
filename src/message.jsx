@@ -76,16 +76,17 @@ function Message({socket}) {
 
   useEffect(() => {
     if(socket){
-      socket.onmessage = (event) => {        
+      socket.onmessage = (event) => {     
+        fetchFriends();   
         let newMessage = JSON.parse(event.data);
+        console.log(newMessage._id);
         setMessages((prevMessages) => {
           if (!prevMessages.find(msg => msg._id === newMessage._id)) {
             return [...prevMessages, newMessage.chat.messages].flat();
           }
           return prevMessages;
         });
-      };
-      fetchFriends();
+      };   
     }
   },[socket]);
 
@@ -112,7 +113,7 @@ function Message({socket}) {
         "https://nickproduct-d61b16cc0f17.herokuapp.com/chats",
         messageData
       );
-      fetchMessage();
+
       setFriends((prevFriends) => {
         const updatedFriends = prevFriends.filter(
           (friend) => friend !== selectedFriend
