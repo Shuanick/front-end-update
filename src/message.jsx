@@ -78,10 +78,9 @@ function Message({socket}) {
     if(socket){
       socket.onmessage = (event) => {        
         let newMessage = JSON.parse(event.data);
-        console.log(newMessage);
         setMessages((prevMessages) => {
           if (!prevMessages.find(msg => msg._id === newMessage._id)) {
-            return [...prevMessages, newMessage];
+            return [...prevMessages, newMessage.chat];
           }
           return prevMessages;
         });
