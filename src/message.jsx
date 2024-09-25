@@ -180,7 +180,7 @@ function Message() {
             </div>
           ))}
         </div>
-        {talkId ? (
+        {selectedFriend ? (
           <form onSubmit={handleSendMessage} className="message-content-box">
             <input
               type="text"
