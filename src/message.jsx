@@ -22,7 +22,8 @@ function Message({socket}) {
       const chat = chats.find((chat) =>
         chat.participants.includes(selectedFriend)
       );
-      setMessages(chat.messages); // 更新消息状态
+      console.log("fetchMessage : " + chat);
+      setMessages(chat? chat.messages : []); // 更新消息状态
     } catch (error) {
       console.error("获取聊天记录时出错:", error);
     }
