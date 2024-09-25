@@ -77,8 +77,14 @@ function Message({socket}) {
   useEffect(() => {
     if(socket){
       socket.onmessage = (event) => {        
-        fetchFriends();
-        fetchMessage();
+        let newMessage = JSON.parse(event.data);
+        console.log(newMessage);
+        setMessages((prevMessages) => {
+          if (!prevMessages.find(msg => msg._id === newMessage._id)) {
+            return [...prevMessages, newMessage];
+          }
+          return prevMessages;
+        });
       };
     }
   },[socket]);
