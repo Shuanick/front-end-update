@@ -79,6 +79,7 @@ function Message({socket}) {
       socket.onmessage = (event) => {     
         fetchFriends();   
         let newMessage = JSON.parse(event.data);
+        console.log(messages);
         console.log(newMessage.chat.messages);
         setMessages((prevMessages) => {
           if (!prevMessages.find(msg => msg._id === newMessage.chat.messages._id)) {
