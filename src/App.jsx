@@ -39,8 +39,10 @@ function App() {
   const modal1Ref = useRef();
   const searchModalRef = useRef();
   const uploadRef = useRef();
+  const socketRef = useRef(null);
   
   useEffect(() => {
+
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("userId");
     const localIcon = localStorage.getItem("icon")
@@ -49,6 +51,10 @@ function App() {
       setIsLoggedIn(true);
       setUserId(id);
       setSelectedIcon(localIcon);
+      socketRef.current = new WebSocket(`wss://nickproduct-d61b16cc0f17.herokuapp.com/${id}`);
+      socketRef.current.onclose = () => {
+        console.log("WebSocket disconnected.");
+      };
     } else {
       setIsLoggedIn(false);
     }
@@ -272,7 +278,7 @@ function App() {
           </div>
           <Routes>
             <Route path="/" element={isLoggedIn ? <Home/> : <Login/>} />
-            <Route path="/message" element={<Message />} />
+            <Route path="/message" element={<Message  socket={socketRef.current}/>} />
             <Route path="/notification" element={<Bell />} />
             <Route
               path="/post"

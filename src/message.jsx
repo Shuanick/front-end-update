@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
-function Message() {
+function Message({socket}) {
   const currentId = localStorage.getItem("userId");
   const location = useLocation();
   const { talkId } = location.state || { talkId: null };
@@ -10,7 +10,6 @@ function Message() {
   const [selectedFriend, setSelectedFriend] = useState(talkId);
   const [messageContent, setMessageContent] = useState("");
   const [messages, setMessages] = useState([]);
-  const socketRef = useRef(null);
 
   const messageContainerRef = useRef(null);
 
@@ -72,22 +71,17 @@ function Message() {
 
   useEffect(() => {
     fetchFriends();
-
     fetchMessage();
-
-    socketRef.current = new WebSocket(
-      `wss://nickproduct-d61b16cc0f17.herokuapp.com/${currentId}`
-    ); //
-
-    socketRef.current.onmessage = (event) => {
-      fetchFriends();
-      fetchMessage();
-    };
-
-    socketRef.current.onclose = () => {
-      console.log("WebSocket disconnected.");
-    };
   }, [talkId, selectedFriend]);
+
+  useEffect(() => {
+    if(socket){
+      socket.onmessage = (event) => {        
+        fetchFriends();
+        fetchMessage();
+      };
+    }
+  },[socket]);
 
   const handleFriendClick = (friend) => {
     setSelectedFriend(friend);
