@@ -5,7 +5,7 @@ import axios from "axios";
 function Message() {
   const currentId = localStorage.getItem("userId");
   const location = useLocation();
-  const { talkId } = location.state || {};
+  const { talkId } = location.state || { talkId: null };
   const [friends, setFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState(talkId);
   const [messageContent, setMessageContent] = useState("");
@@ -16,9 +16,13 @@ function Message() {
 
   const fetchMessage = async () => {
     try {
-      const response = await axios.get(`https://nickproduct-d61b16cc0f17.herokuapp.com/chats/${currentId}`);
+      const response = await axios.get(
+        `https://nickproduct-d61b16cc0f17.herokuapp.com/chats/${currentId}`
+      );
       const chats = response.data;
-      const chat = chats.find((chat) => chat.participants.includes(selectedFriend));
+      const chat = chats.find((chat) =>
+        chat.participants.includes(selectedFriend)
+      );
       setMessages(chat ? chat.messages : []); // 更新消息状态
     } catch (error) {
       console.error("获取聊天记录时出错:", error);
@@ -28,7 +32,8 @@ function Message() {
   useEffect(() => {
     // 当 messages 更新时，滚动到最底部
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -70,18 +75,21 @@ function Message() {
 
     fetchMessage();
 
-    socketRef.current = new WebSocket(`wss://nickproduct-d61b16cc0f17.herokuapp.com/${currentId}`);//
+    socketRef.current = new WebSocket(
+      `wss://nickproduct-d61b16cc0f17.herokuapp.com/${currentId}`
+    ); //
 
     socketRef.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, data.chat.messages].flat());
+      setMessages((prevMessages) =>
+        [...prevMessages, data.chat.messages].flat()
+      );
     };
 
     socketRef.current.onclose = () => {
       console.log("WebSocket disconnected.");
     };
-  
-  }, [talkId,selectedFriend]);
+  }, [talkId, selectedFriend]);
 
   const handleFriendClick = (friend) => {
     setSelectedFriend(friend);
@@ -99,10 +107,13 @@ function Message() {
     };
 
     setMessages((prevMessages) => [...prevMessages, messageData]);
+    setMessageContent(""); // 清空输入框
 
     try {
-      await axios.post("https://nickproduct-d61b16cc0f17.herokuapp.com/chats", messageData);
-      setMessageContent(""); // 清空输入框
+      await axios.post(
+        "https://nickproduct-d61b16cc0f17.herokuapp.com/chats",
+        messageData
+      );
 
       setFriends((prevFriends) => {
         const updatedFriends = prevFriends.filter(
@@ -111,7 +122,6 @@ function Message() {
         updatedFriends.unshift(selectedFriend); // 放到最前面
         return updatedFriends;
       });
-
     } catch (error) {
       console.error("发送消息时出错:", error);
     }
@@ -157,23 +167,30 @@ function Message() {
         </div>
       </div>
       <div className="messagebox">
-        <div className="friend-user">{selectedFriend}</div>     
-          <div className="message" ref={messageContainerRef} >
-            {messages.map((msg, index) => (
-              <div key={index} className={msg.sender===selectedFriend?"other-message":"my-message"} >
-                {msg.content}
-              </div>
-            ))}
+        <div className="friend-user">{selectedFriend}</div>
+        <div className="message" ref={messageContainerRef}>
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={
+                msg.sender === selectedFriend ? "other-message" : "my-message"
+              }
+            >
+              {msg.content}
+            </div>
+          ))}
         </div>
-        <form onSubmit={handleSendMessage} className="message-content-box">
-          <input
-            type="text"
-            className="message-content"
-            value={messageContent}
-            onChange={(e) => setMessageContent(e.target.value)}
-            placeholder="请输入消息..."
-          />
-        </form>
+        {talkId ? (
+          <form onSubmit={handleSendMessage} className="message-content-box">
+            <input
+              type="text"
+              className="message-content"
+              value={messageContent}
+              onChange={(e) => setMessageContent(e.target.value)}
+              placeholder="请输入消息..."
+            />
+          </form>
+        ) : null}
       </div>
     </div>
   );
