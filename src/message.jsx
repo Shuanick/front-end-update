@@ -83,7 +83,8 @@ function Message({socket}) {
         console.log(newMessage.chat.messages);
         setMessages((prevMessages) => {
           if (!prevMessages.find(msg => msg._id === newMessage.chat.messages._id)) {
-            return [...prevMessages, newMessage.chat.messages].flat();
+            console.log("HI");
+            return [...prevMessages, newMessage.chat.messages];
           }
           return prevMessages;
         });
